@@ -1,0 +1,14 @@
+[Unit]
+Description=Bot Twitter Telegram bitcoin
+After=network.target
+StartLimitInterval=5
+
+[Service]
+EnvironmentFile=/etc/systemd/system/environment/btc_bot.env
+ExecStart=npm start
+WorkingDirectory=/home/pi/Server/Files/btc_bot
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
