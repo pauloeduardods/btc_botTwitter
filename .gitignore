@@ -1,5 +1,6 @@
-btc_bot.service
+#btc_bot.service
 node_modules/
 */price_btc
-teste.js
-teste1.js
+#teste.js
+#teste1.js
+src/mysql.js
