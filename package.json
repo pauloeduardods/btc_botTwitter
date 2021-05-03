@@ -5,10 +5,10 @@
   "main": "run_bot.js",
   "dependencies": {
     "axios": "^0.21.1",
+    "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "twitter": "^1.7.1"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node run_bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"

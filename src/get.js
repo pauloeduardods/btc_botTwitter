@@ -1,4 +1,5 @@
 const axios = require('axios')
+const moment = require('moment')()
 const mysql = require('./mysql').pool
 const coins = require('../coins').coins
 const tools = require('./tools')
@@ -22,13 +23,13 @@ function json_params(content, params){
 }
 
 async function get_price(){
-    const date = tools.get_datetime(0)
+    const date = moment.format('YYYY-MM-DD HH:mm:ss')
     const coin_keys = Object.keys(coins)
     const loop_async = coin_keys.map(async coin_name => {
         const coin = coins[coin_name]
         const content = await request(coin.url, coin.params)
         const price = Number(json_params(content, coin.json_params)).toFixed(2)
-        const sql = `INSERT INTO price (name, price, date) VALUES("${coin_name}", "${price}", "${date}")`
+        const sql = `INSERT INTO price (name, price, datetime) VALUES("${coin_name}", "${price}", "${date}")`
         mysql.getConnection((err, conn)=>{
             if (err) throw err
             conn.query(sql, (error, result, fields)=>{
@@ -40,6 +41,7 @@ async function get_price(){
     await Promise.all(loop_async)
     return new Promise(res => res(true))
 }
+//console.log(moment.format('YYYY-MM-DDTHH:mm:ss'))
 //console.log(new Date().toISOString().slice(0, 19).replace('T', ' '))
-//console.log(tools.get_datetime(0))
+//console.log(tools.get_datetime(3))
 get_price()

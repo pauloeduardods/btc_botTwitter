@@ -31,8 +31,8 @@ function get_datetime(mode = Number, days_before = 0){
     if (mode == 1) return `${year}-${months}-${days}`
 
     if (mode == 2) return `${hours}:${minutes}:${seconds}`
-
 }
+
 function get_price(broker = String,date = String,hours = Number, minutes = Number, callback){
     let _path = path_btcprice + '/' + broker + date + '.txt'
     if (!fs.existsSync(_path)) return false
