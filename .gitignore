@@ -1,0 +1,14 @@
+#btc_bot.service
+#modules
+node_modules/
+
+#old data
+*/price_btc
+
+#ambient variables
+.env
+
+#tests
+teste.js
+teste1.js
+get.js

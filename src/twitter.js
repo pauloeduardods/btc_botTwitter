@@ -2,17 +2,17 @@ const Twitter = require('twitter')
 const to = require('./tools')
 
 var client_br = new Twitter({
-    consumer_key: process.env.API_KEY_TWITTER_BR,
-    consumer_secret: process.env.API_SECRET_TWITTER_BR,
-    access_token_key: process.env.ACCESS_TOKEN_KEY_BR,
-    access_token_secret: process.env.ACCESS_TOKEN_SECRET_BR
+    consumer_key: process.env.BTCBOT_APIKEY_TWITTER_BR,
+    consumer_secret: process.env.BTCBOT_APISECRET_TWITTER_BR,
+    access_token_key: process.env.BTCBOT_ACCESSTOKEN_TWITTER_BR,
+    access_token_secret: process.env.BTCBOT_ACCESSSECRET_TWITTER_BR
 })
 
 var client_usa = new Twitter({
-    consumer_key: process.env.API_KEY_TWITTER_USA,
-    consumer_secret: process.env.API_SECRET_TWITTER_USA,
-    access_token_key: process.env.ACCESS_TOKEN_KEY_USA,
-    access_token_secret: process.env.ACCESS_TOKEN_SECRET_USA
+    consumer_key: process.env.BTCBOT_APIKEY_TWITTER_USA,
+    consumer_secret: process.env.BTCBOT_APISECRET_TWITTER_USA,
+    access_token_key: process.env.BTCBOT_ACCESSTOKEN_TWITTER_USA,
+    access_token_secret: process.env.BTCBOT_ACCESSSECRET_TWITTER_USA
 })
 
 async function tweet_br(){

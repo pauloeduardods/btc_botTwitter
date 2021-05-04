@@ -1,10 +1,11 @@
+require('dotenv/config')
 const mysql = require('mysql')
 
 var pool = mysql.createPool({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'paulopaulo',
-    database: 'btc_bot'
+    host: process.env.BTCBOT_SQLHOST,
+    port: process.env.BTCBOT_SQLPORT,
+    user: process.env.BTCBOT_SQLUSER,
+    password: process.env.BTCBOT_SQLPASSWD,
+    database: process.env.BTCBOT_SQLDATABASE
 })
 exports.pool = pool

@@ -14,5 +14,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "paulo eduardo de sordi gomes",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
