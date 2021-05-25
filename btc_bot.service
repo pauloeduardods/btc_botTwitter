@@ -1,5 +1,5 @@
 [Unit]
-Description=Bot Twitter Telegram bitcoin
+Description=Bot Bitcoin price in Twitter
 After=network.target
 StartLimitInterval=5
 

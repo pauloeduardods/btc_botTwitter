@@ -11,4 +11,4 @@ node_modules/
 #tests
 teste.js
 teste1.js
-get.js
+src/get.js

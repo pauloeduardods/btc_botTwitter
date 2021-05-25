@@ -1,5 +1,8 @@
-require('dotenv/config')
 const mysql = require('mysql')
+
+if(process.env.ENVIRONMENT == "development"){
+    require('dotenv/config')
+}
 
 var pool = mysql.createPool({
     host: process.env.BTCBOT_SQLHOST,
