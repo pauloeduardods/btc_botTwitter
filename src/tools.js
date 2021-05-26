@@ -6,10 +6,7 @@ const { dirname } = require('path')
 const path = dirname(__dirname) + '/data'
 const log = path + '/logs'
 const erro = path + '/err'
-const price_path = path + '/price_btc'
-
-const paths = [log, erro, price_path]
-
+const paths = [log, erro]
 function write_log(path_num = Number, file_name = String, ...text){
     if(!fs.existsSync(paths[path_num])) fs.mkdirSync(paths[path_num], { recursive: true })
     var path_ = paths[path_num] + '/' + file_name + '.txt'
@@ -17,7 +14,7 @@ function write_log(path_num = Number, file_name = String, ...text){
     stream.write(text + '\n')
     stream.end()
 }
-async function get_price(exchange, datetime_start, datetime_end){
+async function getPrice(exchange, datetime_start, datetime_end){
     return new Promise(result =>{
         const date = moment().format('YYYY-MM-DD HH:mm:ss')
         const sql = `SELECT price FROM price WHERE name = "${exchange}" AND datetime >= "${datetime_start}" AND datetime <= "${datetime_end}"`
@@ -31,27 +28,10 @@ async function get_price(exchange, datetime_start, datetime_end){
         })
     })
 }
-function format_price(value = Number, locale = String){
-    locale = locale || 'en-US'
-    value0 = Number(value).toFixed(2)
-    content = String(value0).split('.')
-    var replacer = /,/gi
-    if (Number(content[1]) >= 1){
-        if (locale == 'en-US')return String(Number(content[0]).toLocaleString('en-US')) + '.' + String(content[1])
-        else{
-            var value1 = String(Number(content[0]).toLocaleString('en-US'))
-            var value2 = value1.replace(replacer, '.')
-            return String(value2) + ',' + String(content[1])  
-        }
-    }else{
-        var value1 = Number(content[0]).toLocaleString('en-US')
-        if (locale == 'en-US') return value1 + '.00'
-        else{
-            var value2 = value1.replace('.', '/')
-            value2 = value2.replace(replacer, '.')
-            value2 = value2.replace('/', ',')
-            return value2 + ',00'
-        }
-    }
+function format_price(value = Number, locale = 'en-US'){
+    value = Number(value).toFixed(2)
+    value = String(value).split('.')
+    if (locale == 'en-US') return `${Number(value[0]).toLocaleString('en-US')}.${value[1]}`
+    return `${Number(value[0]).toLocaleString('pt-BR')},${value[1]}`
 }
-module.exports = {write_log, get_price, format_price}
+module.exports = {write_log, getPrice, format_price}

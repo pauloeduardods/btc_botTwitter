@@ -39,8 +39,4 @@ async function requestPrice(){
     await Promise.all(loop_async)
     return new Promise(res => res(true))
 }
-async function get(){
-    console.log(await requestPrice())
-}
-get()
 module.exports ={requestPrice}

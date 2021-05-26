@@ -4,10 +4,11 @@ node_modules/
 
 #old data
 */price_btc
+*/logs
 
 #ambient variables
 .env
-
+production.env
 #tests
 teste.js
 teste1.js

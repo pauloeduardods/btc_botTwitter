@@ -15,8 +15,7 @@ const coins = {
         url: 'https://api.binance.com/api/v3/avgPrice',
         params: {symbol : 'BTCEUR'},
         json_params: ['price'],
-        symbol:'€U',
-        name: 'Binance'
+        
     },
     biscoint:{
         url:'https://api.biscoint.io/v1/ticker?base=BTC&quote=BRL',
@@ -54,6 +53,25 @@ const twitter = {
             1:'24H',
             7:'7Dias',
             30:'30Dias'
+        }
+    },
+    twitterUSA:{
+        binance_usd:{
+            symbol:'U$',
+        },
+        binance_eur:{
+            symbol:'€U',
+        },
+        binance_brl:{
+            symbol:'R$',
+        }
+    },
+    twitterUSA_config:{
+        exchange: 'binance_usd',
+        days_before:{
+            1:'24H',
+            7:'Week',
+            30:'Month'
         }
     }
 }
