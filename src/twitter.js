@@ -42,7 +42,6 @@ async function tweet_br(){
         const momentBefore_start = momentBefore.subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
         const momentBefore_end = momentBefore.add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
         const result = await tools.getPrice(exchangeChange, momentBefore_start, momentBefore_end)
-        //const price_today = await tools.getPrice(exchangeChange, datetime_start, datetime_end)
         if (result && price_today){
             const variation = (((Number(price_today) / Number(result))*100)-100)
             status = status + `\nVariação ${days_before[days_before_keys[i]]} : ${tools.format_price(variation)}%`

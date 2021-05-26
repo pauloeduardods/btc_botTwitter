@@ -5,7 +5,7 @@ const { dirname } = require('path')
 
 const path = dirname(__dirname) + '/data'
 const log = path + '/logs'
-const erro = path + '/err'
+const erro = path + '/errors'
 const paths = [log, erro]
 function write_log(path_num = Number, file_name = String, ...text){
     if(!fs.existsSync(paths[path_num])) fs.mkdirSync(paths[path_num], { recursive: true })
