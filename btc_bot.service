@@ -6,7 +6,7 @@ StartLimitInterval=5
 [Service]
 EnvironmentFile=/path/to/btc_bot.env
 ExecStart=npm start
-WorkingDirectory=/home/pi/Server/Files/btc_bot
+WorkingDirectory=/path/to/bot_coin_twitter
 Restart=always
 User=pi
 
