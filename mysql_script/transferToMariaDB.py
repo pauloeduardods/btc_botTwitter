@@ -3,8 +3,6 @@ from posixpath import join
 import sys
 import mariadb
 
-#names = ['binancebrl', 'binanceusd']#, 'binanceeur', 'biscoint', 'bitpreco']
-#names = ['binanceeur']
 names = {
    'binancebrl':'binance_brl',
    'binanceusd':'binance_usd',

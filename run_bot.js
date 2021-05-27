@@ -10,7 +10,6 @@ async function main(){
         if (min != last_min) { 
             var requestPrice = await rp.requestPrice()
             if (requestPrice == true && min % 30 == 0){
-                await new Promise(resolve => setTimeout(resolve, 3000))
                 await tw.tweet_br()
                 await tw.tweet_usa()
             }

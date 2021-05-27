@@ -39,34 +39,14 @@ async function tweet_br(){
     }
     for(let i = 0; i < days_before_keys.length; i++){
         const momentBefore = moment().subtract(days_before_keys[i], 'days')
-        const momentBefore_start = momentBefore.subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-        const momentBefore_end = momentBefore.add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
+        const momentBefore_start = moment(momentBefore).subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+        const momentBefore_end = moment(momentBefore).add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
         const result = await tools.getPrice(exchangeChange, momentBefore_start, momentBefore_end)
         if (result && price_today){
             const variation = (((Number(price_today) / Number(result))*100)-100)
             status = status + `\nVariação ${days_before[days_before_keys[i]]} : ${tools.format_price(variation)}%`
         }
     }
-    // const pricesLoop = coins_keys.map(async coin => {
-    //     const result = await tools.getPrice(coin, datetime_start, datetime_end)
-    //     if (result){
-    //         status = status + `${tools.format_price(result, 'pt-BR')} ${coins[coin].symbol}    ${coins[coin].name}\n`
-    //         if (coin == exchangeChange) price_today = result
-    //     }
-    // })
-    //await Promise.all(pricesLoop)
-    // const changeLoop = days_before_keys.map(async day_before =>{
-    //     const momentBefore = moment().subtract(day_before, 'days')
-    //     const momentBefore_start = momentBefore.subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-    //     const momentBefore_end = momentBefore.add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
-    //     const result = await tools.getPrice(exchangeChange, momentBefore_start, momentBefore_end)
-    //     //const price_today = await tools.getPrice(exchangeChange, datetime_start, datetime_end)
-    //     if (result && price_today){
-    //         const variation = (((Number(price_today) / Number(result))*100)-100)
-    //         status = status + `\nVariação ${days_before[day_before]} : ${tools.format_price(variation)}%`
-    //     }
-    // })
-    //await Promise.all(changeLoop)
     status = status + '\n\n#bitcoin'
     if (status.replace(/\r?\n|\r/g, '') != 'Preço do Bitcoin:#bitcoin'){
         client_br.post('/statuses/update', {status: status}, (error, tweet, response)=>{ 
@@ -108,38 +88,14 @@ async function tweet_usa(){
     }
     for(let i = 0; i < days_before_keys.length; i++){
         const momentBefore = moment().subtract(days_before_keys[i], 'days')
-        const momentBefore_start = momentBefore.subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-        const momentBefore_end = momentBefore.add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
+        const momentBefore_start = moment(momentBefore).subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+        const momentBefore_end = moment(momentBefore).add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
         const result = await tools.getPrice(exchangeChange, momentBefore_start, momentBefore_end)
         if (result && price_today){
-            console.log(price_today)
-            console.log(result)
             const variation = (((Number(price_today) / Number(result))*100)-100)
             status = status + `\n${days_before[days_before_keys[i]]} % change: ${tools.format_price(variation)}%`
         }
     }
-    // const pricesLoop = coinsKeys.map(async coin =>{
-    //     const result = await tools.getPrice(coin, datetime_start, datetime_end)
-    //     if (result){
-    //         status = status + `${coins[coin].symbol}    ${tools.format_price(result)}\n`
-    //         if (coin == exchangeChange) price_today = result
-    //     }
-    // })
-    // await Promise.all(pricesLoop)
-
-    // const changeLoop = days_before_keys.map(async day_before=>{
-    //     const momentBefore = moment().subtract(day_before, 'days')
-    //     const momentBefore_start = momentBefore.subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-    //     const momentBefore_end = momentBefore.add(50, 'seconds').format('YYYY-MM-DD HH:mm:ss')
-    //     const result = await tools.getPrice(exchangeChange, momentBefore_start, momentBefore_end)
-    //     if (result && price_today){
-    //         console.log(price_today)
-    //         console.log(result)
-    //         const variation = (((Number(price_today) / Number(result))*100)-100)
-    //         status = status + `\n${days_before[day_before]} % change: ${tools.format_price(variation)}%`
-    //     }
-    // })
-    // Promise.all(changeLoop)
     status = status + '\n\n#bitcoin'
     if (status.replace(/\r?\n|\r/g, '') != 'Price of Bitcoin:#bitcoin'){
         client_usa.post('/statuses/update', {status: String(status)}, (error, tweet, response)=>{
