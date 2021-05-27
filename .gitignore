@@ -9,6 +9,7 @@ node_modules/
 #ambient variables
 .env
 production.env
+
 #tests
 teste.js
 teste1.js
