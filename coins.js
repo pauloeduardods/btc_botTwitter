@@ -50,8 +50,8 @@ const twitter = {
     twitterBR_config:{
         exchange: 'binance_usd',
         days_before:{
-            1:'24H',
-            7:'7Dias',
+            1:'24H   ',
+            7:'7Dias ',
             30:'30Dias'
         }
     },
@@ -69,8 +69,8 @@ const twitter = {
     twitterUSA_config:{
         exchange: 'binance_usd',
         days_before:{
-            1:'24H',
-            7:'Week',
+            1:'24H  ',
+            7:'Week ',
             30:'Month'
         }
     }
