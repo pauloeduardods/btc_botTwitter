@@ -10,7 +10,7 @@ names = {
    'biscoint':'biscoint',
    'bitpreco':'bitpreco'
 }
-path = f'{os.getcwd()}/data/price_btc'
+path = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/data/price_btc'
 
 if os.getenv('ENVIRONMENT') != 'production':
     from dotenv import load_dotenv
