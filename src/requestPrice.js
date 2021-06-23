@@ -15,10 +15,15 @@ async function request(url, params){
     return new Promise(result => result(data))
 }
 function json_params(content, params){
+  try{
     params.forEach(param => {
         content = content[String(param)]
     })
     return content
+  }
+  catch (e){
+    throw e
+  }
 }
 async function requestPrice(){
     return new Promise(async res =>{
