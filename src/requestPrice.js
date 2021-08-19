@@ -14,7 +14,7 @@ async function request(url, params){
 
   return new Promise(result => result(data))
 }
-function json_params(content, params){
+function objParams(content, params){
   try{
     params.forEach(param => {
       content = content[String(param)]
@@ -51,4 +51,4 @@ async function requestPrice(){
     res(true)
   })
 }
-module.exports ={requestPrice}
+module.exports ={ requestPrice, objParams }
