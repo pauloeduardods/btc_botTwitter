@@ -14,16 +14,15 @@ async function request(url, params){
 
   return new Promise(result => result(data))
 }
-function objParams(content, params){
-  try{
-    params.forEach(param => {
-      content = content[String(param)]
-    })
-    return content
-  }
-  catch (e){
-    throw e
-  }
+function objParams(content, ...params){
+  return params.reduce((acc, cur) => {
+    console.log(acc)
+    try {
+      return acc[cur];
+    } catch (error) {
+      return;
+    }
+  }, content);
 }
 async function requestPrice(){
   return new Promise(async res =>{
