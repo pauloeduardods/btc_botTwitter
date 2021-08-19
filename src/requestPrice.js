@@ -5,18 +5,18 @@ const coins = require('../coins').coins
 const tools = require('./tools')
 
 async function request(url, params) {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve, reject) => {
     const datetime = moment().format('YYYY-MM-DD HH:mm:ss');
     try {
-      return resolve(axios.get(url, { params: params }));
+      return resolve(await axios.get(url, { params: params }));
     } catch (error) {
       tools.write_log(1, 'request', datetime, error);
+      reject(error);
     }
   });
 }
 function objParams(content, ...params){
   return params.reduce((acc, cur) => {
-    console.log(acc)
     try {
       return acc[cur];
     } catch {
@@ -29,27 +29,30 @@ function requestPrices() {
   return new Promise(async (resolve) => {
     const date = moment().format('YYYY-MM-DD HH:mm:ss')
     const coinKeys = Object.keys(coins)
-    const asyncLoop = coinKeys.map(async coin_name => {
+    const asyncLoop = coinKeys.map(coinName => {
       try {
-        const coin = coins[coin_name];
-        const content = await request(coin.url, coin.params);
+        const coin = coins[coinName];
+        const content = request(coin.url, coin.params);
+        //console.log(content)
         const price = objParams(content, coin.jsonParams).toFixed(2)
-        const sql = `INSERT INTO price (name, price, datetime) VALUES("${coin_name}", "${price}", "${date}")`;
+        const sql = `INSERT INTO price (name, price, datetime) VALUES("${coinName}", "${price}", "${date}")`;
         insertDatabase(sql);
-        console.log(sql)
         return sql;
       }
-      catch (e) {
-        tools.write_log(1, "errorRP", date, e);
+      catch (error) {
+        tools.write_log(1, "errorRP", date, error);
+        return;
       }
     });
     await Promise.all(asyncLoop);
+    console.log(asyncLoop)
     return resolve(asyncLoop);
   });
-};
+};  
 
 const ola = async () => {
   console.log(await requestPrices())
+  await requestPrices();
 }
 ola();
 
