@@ -1,0 +1,10 @@
+2021-08-19 17:55:15,ReferenceError: insertDatabase is not defined
+2021-08-19 17:55:15,TypeError: objParams(...).toFixed is not a function
+2021-08-19 17:55:15,TypeError: Cannot read property 'toFixed' of undefined
+2021-08-19 17:55:15,TypeError: objParams(...).toFixed is not a function
+2021-08-19 17:55:15,TypeError: objParams(...).toFixed is not a function
+2021-08-19 17:58:09,TypeError: Cannot read property 'toFixed' of undefined
+2021-08-19 17:58:09,TypeError: Cannot read property 'toFixed' of undefined
+2021-08-19 17:58:09,TypeError: Cannot read property 'toFixed' of undefined
+2021-08-19 17:58:09,TypeError: Cannot read property 'toFixed' of undefined
+2021-08-19 17:58:09,TypeError: Cannot read property 'toFixed' of undefined
