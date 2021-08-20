@@ -5,12 +5,11 @@ const coins = require('../coins').coins;
 const tools = require('./tools');
 
 async function request(url, params) {
-  return new Promise(async (resolve) => {
-    const datetime = moment().format('YYYY-MM-DD HH:mm:ss');
+  return new Promise(async (resolve, reject) => {
     try {
       return resolve((await axios.get(url, { params: params })).data);
     } catch (error) {
-      tools.write_log(1, 'request', datetime, error);
+      return reject(new Error(error));
     }
   });
 }
@@ -60,10 +59,10 @@ function requestPrices() {
 };  
 
 const ola = async () => {
-  await requestPrices();
+  //await requestPrices();
   //'https://api.binance.com/api/v3/avgPrice', {symbol : 'BTCEUR'}
   //'https://api.bitpreco.com/btc-brl/ticker'
   //console.log(await request('https://api.binance.com/api/v3/avgPrice', { symbol: 'BTCEUR' }));
 }
 ola();
-module.exports = { requestPrices, objParams, requestPrices }
+module.exports = { requestPrices, objParams, requestPrices, request }
