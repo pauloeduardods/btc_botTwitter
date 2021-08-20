@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "node run_bot.js",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "author": "paulo eduardo de sordi gomes",
   "license": "ISC",
