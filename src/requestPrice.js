@@ -1,6 +1,6 @@
 const axios = require('axios');
 const moment = require('moment');
-const mysql = require('./mysql').pool;
+const { mysqlTask } = require('./mysql');
 const coins = require('../coins').coins;
 const tools = require('./tools');
 
@@ -22,20 +22,6 @@ function objParams(content, ...params){
       return;
     }
   }, content);
-}
-
-async function mysqlTask(sql) {
-  if (!sql) return;
-  return new Promise((resolve, reject) => {
-    mysql.getConnection((err, conn) => {
-      if (err) return reject(new Error(err));
-      conn.query(sql,async (error, result) => {
-        conn.release();
-        if (error) return reject(new Error(error));
-        return resolve(await result);
-      });
-    });
-  });
 }
 
 async function requestPrices(requestResult_TEST) {
@@ -62,9 +48,6 @@ async function requestPrices(requestResult_TEST) {
 
 const ola = async () => {
   await requestPrices();
-  //'https://api.binance.com/api/v3/avgPrice', {symbol : 'BTCEUR'}
-  //'https://api.bitpreco.com/btc-brl/ticker'
-  //console.log(await request('https://api.binance.com/api/v3/avgPrice', { symbol: 'BTCEUR' }));
 }
-ola();
+//ola();
 module.exports = { requestPrices, objParams, requestPrices, request }
