@@ -24,19 +24,36 @@ async function mysqlTask(sql) {
     });
     return;
   });
+};
+
+const insertPrice = (coinName, price, dateTime) => {
+  if (!coinName || price) return 'Missing params';
+  dateTime = dateTime ? dateTime : moment().format('YYYY-MM-DD HH:mm:ss');
+  return new Promise((resolve, reject) => {
+    try {
+      return resolve(`INSERT INTO price (name, price, datetime) VALUES("${coinName}", "${parseFloat(price).toFixed(2)}", "${dateTime}")`);
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
 
-// async function ola() {
-//   try {
-//     const date = moment().format('YYYY-MM-DD HH:mm:ss');
-//     console.log(await mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("teste", "20.1", "${date}")`));
-//     console.log(await mysqlTask('SELECT * FROM price'));
-//   } catch (err) {
-//     console.log(err);
-//   }
+async function ola() {
+  try {
+    const date = moment().format('YYYY-MM-DD HH:mm:ss');
+    //mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("teste", "20.1", "${date}")`);
+    
+    //console.log(await mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("teste", "20.1", "${date}")`));
+    //console.log(await mysqlTask('SELECT * FROM price'));
+    const datetime_start = moment().subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+    const datetime_end = moment().add(1, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+    console.log(await getPrice('teste', datetime_start, datetime_end));
+  } catch (err) {
+    console.log(err);
+  }
  
-// }
-//ola()
+}
+ola()
 
 async function getPrice(exchange, datetime_start, datetime_end) {
   return new Promise((result, reject) => {
