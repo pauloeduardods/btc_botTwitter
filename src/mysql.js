@@ -1,4 +1,5 @@
-const mysql = require('mysql')
+const mysql = require('mysql');
+const moment = require('moment');
 
 if(process.env.ENVIRONMENT == "development"){
   require('dotenv/config')
@@ -16,16 +17,26 @@ const mysqlConnection = mysql.createConnection(options);
 async function mysqlTask(sql) {
   if (!sql) return new Error('Sql commnad missing');
   return new Promise((resolve, reject) => {
-    mysqlConnection.connect((err) => reject(new Error(err)));
     mysqlConnection.query(sql, (error, result) => {
       if (error) return reject(new Error(error));
-      mysqlConnection.end((err) => reject(new Error(err)));
+      console.log(result);
       resolve(result);
     });
-    mysqlConnection.destroy();
     return;
   });
 }
+
+// async function ola() {
+//   try {
+//     const date = moment().format('YYYY-MM-DD HH:mm:ss');
+//     console.log(await mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("teste", "20.1", "${date}")`));
+//     console.log(await mysqlTask('SELECT * FROM price'));
+//   } catch (err) {
+//     console.log(err);
+//   }
+ 
+// }
+//ola()
 
 async function getPrice(exchange, datetime_start, datetime_end) {
   return new Promise((result, reject) => {

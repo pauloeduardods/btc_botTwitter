@@ -1,5 +1,5 @@
 const fs = require('fs')
-const mysql = require('./mysql').pool
+const {} = require('./mysql')
 const moment = require('moment')
 const { dirname } = require('path')
 
@@ -14,20 +14,7 @@ function write_log(path_num = Number, file_name = String, ...text){
   stream.write(text + '\n')
   stream.end()
 }
-async function getPrice(exchange, datetime_start, datetime_end){
-  return new Promise(result =>{
-    const date = moment().format('YYYY-MM-DD HH:mm:ss')
-    const sql = `SELECT price FROM price WHERE name = "${exchange}" AND datetime >= "${datetime_start}" AND datetime <= "${datetime_end}"`
-    mysql.getConnection((err, conn)=>{
-      if (err) write_log(1, 'getPriceSQLCONN', date, err)
-      conn.query(sql, (error, res, fields)=>{
-        if (error) write_log(1, 'getPriceSQLQUERRY', date, error)
-        conn.release()
-        res.length > 0? result(Number(res[res.length - 1].price).toFixed(2)) : result(false)
-      })
-    })
-  })
-}
+
 function format_price(value = Number, locale = 'en-US'){
   value = Number(value).toFixed(2)
   value = String(value).split('.')
