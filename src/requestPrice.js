@@ -22,7 +22,7 @@ function json_params(content, params){
     return content
   }
   catch (e){
-    throw e
+    tools.write_log(1, "json_params", date, e)
   }
 }
 async function requestPrice(){
