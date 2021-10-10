@@ -4,22 +4,24 @@ const { dirname } = require('path');
 
 const dirPath = dirname(__dirname) + '/data';
 
-function writeLog(fileName, ...text) {
-  const path = `${dirPath}/Logs`
+function write(local, type, fileName, ...text) {
+  const path = `${dirPath}/${local}`
   if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
-  const finalPath = `${path}/${fileName}.log`
+  const finalPath = `${path}/${fileName}.${type}`
   const stream = fs.createWriteStream(finalPath, { flags: 'a' });
   stream.write(`${moment().format('YYYY-MM-DD HH:mm:ss')},${text.join(',')}\n`);
   stream.end();
 }
 
-function writeError(fileName, ...text) {
-  const path = `${dirPath}/Errors`
-  if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
-  const finalPath = `${path}/${fileName}.err`
-  const stream = fs.createWriteStream(finalPath, { flags: 'a' });
-  stream.write(`${moment().format('YYYY-MM-DD HH:mm:ss')},${text.join(',')}\n`);
-  stream.end();
+function writeLog(fileName, ...text) {
+  write('Logs', 'log', fileName, ...text)
 }
+
+function writeError(fileName, ...text) {
+  write('Errors', 'err', fileName, ...text);
+}
+
+writeError('223', 123,1234567)
+writeLog('224', 404, 40444)
 
 module.exports = { writeLog, writeError };
