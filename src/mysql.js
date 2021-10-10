@@ -53,7 +53,7 @@ async function getPrice(exchange, dateTimeStart, dateTimeEnd) {
     } catch (error) {
       writeError('getPrice-mysql', error);
     }
-  })
+  });
 }
 
 module.exports = { getPrice, insertPrice };
