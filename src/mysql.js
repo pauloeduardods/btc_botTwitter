@@ -1,8 +1,9 @@
 const mysql = require('mysql');
 const moment = require('moment');
+const writeLog = require('./utils/writeLog');
 
-if(process.env.ENVIRONMENT == "development"){
-  require('dotenv/config')
+if (process.env.ENVIRONMENT == 'development') {
+  require('dotenv/config');
 }
 
 const options = {
@@ -12,54 +13,54 @@ const options = {
   password: process.env.BTCBOT_SQLPASSWD,
   database: process.env.BTCBOT_SQLDATABASE
 };
-const mysqlConnection = mysql.createConnection(options);
 
 async function mysqlTask(sql) {
   if (!sql) return new Error('Sql commnad missing');
   return new Promise((resolve, reject) => {
-    mysqlConnection.query(sql, (error, result) => {
-      if (error) return reject(new Error(error));
-      console.log(result);
-      resolve(result);
-    });
-    return;
-  });
-};
-
-const insertPrice = (coinName, price, dateTime) => {
-  if (!coinName || price) return 'Missing params';
-  dateTime = dateTime ? dateTime : moment().format('YYYY-MM-DD HH:mm:ss');
-  return new Promise((resolve, reject) => {
     try {
-      return resolve(`INSERT INTO price (name, price, datetime) VALUES("${coinName}", "${parseFloat(price).toFixed(2)}", "${dateTime}")`);
+      const mysqlConnection = mysql.createConnection(options);
+      mysqlConnection.query(sql, (error, result) => {
+        mysqlConnection.destroy();
+        if (error) return reject(new Error(error));
+        resolve(result);
+      });
     } catch (error) {
-      reject(error);
+      return reject(new Error(error));
     }
   });
 }
 
-async function ola() {
-  try {
-    const date = moment().format('YYYY-MM-DD HH:mm:ss');
-    //mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("teste", "20.1", "${date}")`);
-    
-    //console.log(await mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("teste", "20.1", "${date}")`));
-    //console.log(await mysqlTask('SELECT * FROM price'));
-    const datetime_start = moment().subtract(29, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-    const datetime_end = moment().add(1, 'minutes').format('YYYY-MM-DD HH:mm:ss')
-    console.log(await getPrice('teste', datetime_start, datetime_end));
-  } catch (err) {
-    console.log(err);
-  }
- 
+const insertPrice = (coinName, price, dateTime) => {
+  return new Promise((resolve) => {
+    if (!coinName || !price) return writeLog(1, 'insetPrice-mysql', 'missing params', coinName, price, dateTime);
+    const date = dateTime || moment().format('YYYY-MM-DD HH:mm:ss');
+    try {
+      resolve(mysqlTask(`INSERT INTO price (name, price, datetime) VALUES("${coinName}", "${parseFloat(price).toFixed(2)}", "${date}")`));
+    } catch (error) {
+      writeLog(1, 'insetPrice-mysql', error);
+    }
+  });
 }
-ola()
 
-async function getPrice(exchange, datetime_start, datetime_end) {
-  return new Promise((result, reject) => {
-    const sql = `SELECT price FROM price WHERE name = "${exchange}" AND datetime >= "${datetime_start}" AND datetime <= "${datetime_end}"`;
-    return mysqlTask(sql).then((res) => result(res)).catch((error) => reject(error));
+async function getPrice(exchange, dateTimeStart, dateTimeEnd) {
+  return new Promise((resolve) => {
+    const startDateTime = dateTimeStart || moment().subtract(30, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+    const endDateTime = dateTimeEnd || moment().add(1, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+    if (!exchange) return writeLog(1, 'getPrice-mysql', 'missing params', exchange, dateTimeStart, dateTimeEnd);
+    try {
+      const sql = `SELECT price FROM price WHERE name = "${exchange}" AND datetime >= "${startDateTime}" AND datetime <= "${endDateTime}"`;
+      resolve(mysqlTask(sql));
+    } catch (error) {
+      writeLog(1, 'getPrice-mysql', error);
+    }
   })
 }
 
-module.exports = { mysqlConnection, mysqlTask, getPrice }
+async function sla() {
+  await insertPrice('teste', 29.73);
+  const result = await getPrice('teste');
+  console.log(result[result.length - 1].price);
+}
+sla()
+
+module.exports = { getPrice, insertPrice };
