@@ -2,7 +2,7 @@ const fs = require('fs');
 const moment = require('moment');
 const { dirname } = require('path');
 
-const dirPath = dirname(__dirname) + '/data';
+const dirPath = dirname(dirname(__dirname)) + '/data';
 
 function write(local, type, fileName, ...text) {
   const path = `${dirPath}/${local}`;
