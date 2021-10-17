@@ -2,15 +2,9 @@
 #modules
 node_modules/
 
-#old data
-*/price_btc
-*/logs
+#data
+data/
 
 #ambient variables
 .env
 production.env
-
-#tests
-teste.js
-teste1.js
-src/get.js
