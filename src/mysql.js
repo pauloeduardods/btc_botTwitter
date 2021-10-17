@@ -43,17 +43,18 @@ const insertPrice = (coinName, price, dateTime) => {
 }
 
 async function getPrice(exchange, dateTimeStart, dateTimeEnd) {
-  return new Promise((resolve) => {
-    const startDateTime = dateTimeStart || moment().subtract(30, 'minutes').format('YYYY-MM-DD HH:mm:ss');
-    const endDateTime = dateTimeEnd || moment().add(1, 'minutes').format('YYYY-MM-DD HH:mm:ss');
-    if (!exchange) return writeError('getPrice-mysql', 'missing params', exchange, dateTimeStart, dateTimeEnd);
-    try {
-      const sql = `SELECT price FROM price WHERE name = "${exchange}" AND datetime >= "${startDateTime}" AND datetime <= "${endDateTime}"`;
-      resolve(mysqlTask(sql));
-    } catch (error) {
-      writeError('getPrice-mysql', error);
-    }
-  });
+  const startDateTime = dateTimeStart || moment().subtract(30, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+  const endDateTime = dateTimeEnd || moment().add(1, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+  if (!exchange) return writeError('getPrice-mysql', 'missing params', exchange, dateTimeStart, dateTimeEnd);
+  try {
+    const sql = `SELECT price FROM price WHERE name = "${exchange}" AND datetime >= "${startDateTime}" AND datetime <= "${endDateTime}"`;
+    const result = await mysqlTask(sql);
+    if (result.length < 0) return false;
+    const lasPrice = Number(result[result.length - 1].price).toFixed(2);
+    return lasPrice;
+  } catch (error) {
+    writeError('getPrice-mysql', error);
+  }
 }
 
 module.exports = { getPrice, insertPrice };
