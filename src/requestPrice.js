@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { insertPrice } = require('./mysql');
 const { writeError } = require('./utils/writeLog');
-const coins = require('../coins').coins;
+const coins = require('./coins').coins;
 
 async function request(url, params) {
   try {
