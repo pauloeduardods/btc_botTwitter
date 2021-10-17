@@ -12,15 +12,13 @@
     "twitter": "^1.7.1"
   },
   "scripts": {
-    "start": "node run_bot.js",
+    "start": "node src/runBot.js",
     "test": "jest --watch"
   },
   "author": "paulo eduardo de sordi gomes",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "eslint": "^8.0.0",
-    "eslint-config-google": "^0.14.0",
     "jest": "^27.0.6"
   }
 }
